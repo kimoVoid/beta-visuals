@@ -41,8 +41,8 @@ A complete revamp of the Video Settings screen with tons of customization. Inspi
 ## Usage
 1. Grab the Ornithe gen2 instance: https://ornithemc.net/ornithe-installer-rs/?prism&minecraft-version=b1.7.3&gen=2
 2. Import the instance on Prism.
-3. Get the latest release: https://github.com/kimoVoid/beta-visuals/releases/latest
-4. Simply place it in your mods folder and play.
+3. Get the latest artifact from here: https://nightly.link/kimoVoid/beta-visuals/workflows/build/main/Artifacts.zip
+4. Inside the artifacts you will find a jar file, simply place it in your mods folder.
 
 ## Mod recommendations
 - [Reframed](https://github.com/kimoVoid/reframed) for modern LWJGL 3 and overall better experience.
