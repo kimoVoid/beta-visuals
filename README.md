@@ -1,11 +1,11 @@
-![icon.png](src/main/resources/assets/betavisuals/icon.png)
+![icon.png](./pictures/icon.png)
 
 # Beta Visuals for b1.7.3
 A complete revamp of the Video Settings screen with tons of customization. Inspired by OptiFine and BTA.
 
-|           GUI in main menu            |              GUI in-game              | 
-|:-------------------------------------:|:-------------------------------------:|
-| <img src="./screenshots/screen1.png"> | <img src="./screenshots/screen2.png"> |
+|          GUI in main menu          |            GUI in-game             | 
+|:----------------------------------:|:----------------------------------:|
+| <img src="./pictures/screen1.png"> | <img src="./pictures/screen2.png"> |
 
 ## Features
 - Categories:
