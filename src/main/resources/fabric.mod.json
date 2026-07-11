@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "betavisuals",
+	"version": "${version}",
+	"name": "Beta Visuals",
+	"description": "Revamped video settings with more customization.",
+	"authors": [
+		"kimoVoid"
+	],
+	"contact": {
+		"homepage": "https://github.com/kimoVoid/beta-visuals"
+	},
+	"license": "MIT",
+	"icon": "assets/betavisuals/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client-init": [
+			"io.github.kimovoid.betavisuals.BetaVisuals"
+		]
+	},
+	"mixins": [
+		"betavisuals.mixins.json"
+	],
+	"accessWidener": "betavisuals.accesswidener",
+	"depends": {
+		"minecraft": "1.0.0-beta.7.3"
+	}
+}

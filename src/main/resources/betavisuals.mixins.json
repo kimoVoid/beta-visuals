@@ -1,0 +1,37 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.kimovoid.betavisuals.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "details.bettergrass.BlockRendererMixin",
+    "details.cloudheight.DimensionMixin",
+    "details.entityshadows.EntityRendererMixin",
+    "details.vignette.GameGuiMixin",
+    "general.fpslimit.GameRendererMixin",
+    "general.fpslimit.MinecraftMixin",
+    "general.fullscreen.DisplayMixin",
+    "general.renderdistance.GameRendererMixin",
+    "general.renderdistance.WorldRendererMixin",
+    "option.GameOptionsMixin",
+    "option.OptionsScreenMixin",
+    "other.asyncscreenshots.ScreenshotMixin",
+    "other.chat.GameGuiMixin",
+    "other.chat.TextRendererMixin",
+    "other.showfps.GameGuiMixin",
+    "quality.clouds.WorldRendererMixin",
+    "quality.grass.BlockRendererMixin",
+    "quality.leaves.WorldRendererMixin",
+    "quality.mipmap.TextureManagerMixin",
+    "quality.rainsnow.GameRendererMixin",
+    "render.fog.GameRendererMixin",
+    "render.whitelinefix.BlockRendererMixin"
+  ],
+  "mixins": [
+    "details.bettergrass.GrassBlockMixin",
+    "general.brightness.WorldMixin"
+  ]
+}

@@ -1,0 +1,29 @@
+options.default=Default
+options.brightness=Brightness
+options.fullscreen=Fullscreen
+options.vsync=VSync
+options.cloudHeight=Cloud Height
+options.betterGrass=Better Grass
+options.mipmap=Mipmap Levels
+options.mipmapType=Mipmap Type
+options.fogStart=Fog Start
+options.vignette=Vignette
+options.entityShadows=Entity Shadows
+options.clouds=Clouds
+options.leaves=Leaves
+options.grass=Grass
+options.rainAndSnow=Rain & Snow
+options.fpsLimit=Max Framerate
+options.showFps=Show Framerate
+options.asyncScreenshots=Async Screenshots
+options.chatTextOpacity=Chat Text Opacity
+options.chatBgOpacity=Chat Background Opacity
+options.chatScale=Chat Scale
+
+options.section.quality=Quality Controls
+
+options.category.general=General
+options.category.quality=Quality
+options.category.details=Details
+options.category.render=Render
+options.category.other=Other
