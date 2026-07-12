@@ -15,6 +15,7 @@
     "general.fpslimit.MinecraftMixin",
     "general.fullscreen.DisplayMixin",
     "general.renderdistance.GameRendererMixin",
+    "general.renderdistance.MinecraftMixin",
     "general.renderdistance.WorldRendererMixin",
     "option.GameOptionsMixin",
     "option.OptionsScreenMixin",

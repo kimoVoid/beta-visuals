@@ -27,7 +27,7 @@ public class GameRendererMixin {
             )
     )
     public void setRenderDistance(float tickDelta, int anaglyphRenderPass, CallbackInfo ci) {
-        this.renderDistance = BetaVisuals.OPTIONS.getRenderDistance() * 16;
+        this.renderDistance = (BetaVisuals.OPTIONS.renderDistance + 4) * 16;
     }
 
     @WrapOperation(
