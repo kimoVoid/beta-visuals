@@ -198,34 +198,25 @@ public class BVOptions {
 
     public void set(BVOptions.Option option, float value, boolean apply) {
         switch (option) {
-            case RENDER_DISTANCE:
-                this.renderDistance = (int) value;
-            case BRIGHTNESS:
+            case RENDER_DISTANCE -> this.renderDistance = (int) value;
+            case BRIGHTNESS -> {
                 this.brightness = value;
                 if (apply && this.minecraft.world != null) this.updateLighting(this.minecraft.world);
-            case FRAMERATE_LIMIT:
-                this.fpsLimit = (int) value;
-            case MIPMAP:
+            }
+            case FRAMERATE_LIMIT -> this.fpsLimit = (int) value;
+            case MIPMAP -> {
                 this.mipmapLevel = (int) value;
                 if (apply && !Mouse.isButtonDown(0)) this.minecraft.textureManager.reload();
-            case MIPMAP_TYPE:
+            }
+            case MIPMAP_TYPE -> {
                 this.mipmapType = (int) value;
                 if (apply && !Mouse.isButtonDown(0)) this.minecraft.textureManager.reload();
-            case FOG:
-                this.fogStart = value;
-                
-            case CLOUD_HEIGHT:
-                this.cloudHeight = value;
-                
-            case CHAT_TEXT_OPACITY:
-                this.chatTextOpacity = value;
-                
-            case CHAT_BACKGROUND_OPACITY:
-                this.chatBgOpacity = value;
-                
-            case CHAT_SCALE:
-                this.chatScale = value;
-                
+            }
+            case FOG -> this.fogStart = value;
+            case CLOUD_HEIGHT -> this.cloudHeight = value;
+            case CHAT_TEXT_OPACITY -> this.chatTextOpacity = value;
+            case CHAT_BACKGROUND_OPACITY -> this.chatBgOpacity = value;
+            case CHAT_SCALE -> this.chatScale = value;
         }
     }
 
