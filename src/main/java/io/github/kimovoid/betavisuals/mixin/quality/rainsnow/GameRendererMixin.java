@@ -37,13 +37,10 @@ public class GameRendererMixin {
             )
     )
     private boolean setRainSnowQuality(GameOptions instance, Operation<Boolean> original) {
-        switch (BetaVisuals.OPTIONS.rainAndSnow) {
-            case 1:
-                return true;
-            case 2:
-                return false;
-            default:
-                return original.call(instance);
-        }
+        return switch (BetaVisuals.OPTIONS.rainAndSnow) {
+            case 1 -> true;
+            case 2 -> false;
+            default -> original.call(instance);
+        };
     }
 }

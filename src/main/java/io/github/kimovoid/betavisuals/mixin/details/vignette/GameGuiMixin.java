@@ -13,14 +13,13 @@ public abstract class GameGuiMixin {
 
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;isFancyGraphicsEnabled()Z"))
     private boolean setVignette(Operation<Boolean> original) {
-        switch (BetaVisuals.OPTIONS.vignette) {
-            case 0:
-                return original.call();
-            case 1:
-                return true;
-            default:
+        return switch (BetaVisuals.OPTIONS.vignette) {
+            case 0 -> original.call();
+            case 1 -> true;
+            default -> {
                 GL11.glBlendFunc(770, 771);
-                return false;
-        }
+                yield false;
+            }
+        };
     }
 }

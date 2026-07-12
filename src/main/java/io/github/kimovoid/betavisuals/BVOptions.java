@@ -9,6 +9,7 @@ import net.minecraft.client.options.GameOptions;
 import net.minecraft.locale.Language;
 import net.minecraft.world.World;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 @Environment(EnvType.CLIENT)
@@ -18,7 +19,7 @@ public class BVOptions {
     private final File file;
 
     // general
-    public int renderDistance = 16;
+    public int renderDistance = 12;
     public float brightness = 0.0F;
     public int fpsLimit = 260;
     public boolean vsync = false;
@@ -81,69 +82,45 @@ public class BVOptions {
 
         if (option.isDetail()) {
             int detail = this.getDetail(option);
-            switch (option) {
-                case CLOUDS:
-                case RAIN_SNOW:
-                    return detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.graphics.fancy") : detail == 2 ? language.translate("options.graphics.fast") : language.translate("options.off");
-                case LEAVES:
-                case GRASS:
-                    return detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.graphics.fancy") : language.translate("options.graphics.fast");
-                default:
-                    return detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.on") : language.translate("options.off");
-            }
+            return switch (option) {
+                case CLOUDS, RAIN_SNOW ->
+                        detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.graphics.fancy") : detail == 2 ? language.translate("options.graphics.fast") : language.translate("options.off");
+                case LEAVES, GRASS ->
+                        detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.graphics.fancy") : language.translate("options.graphics.fast");
+                default ->
+                        detail == 0 ? language.translate("options.default") : detail == 1 ? language.translate("options.on") : language.translate("options.off");
+            };
         }
 
-        switch (option) {
-            case RENDER_DISTANCE:
-                return this.renderDistance + " chunks";
-            case BRIGHTNESS:
-                return this.brightness == 0.0F ? "Moody" : this.brightness == 1.0F ? "Bright" : (int) (this.brightness * 100) + "%";
-            case FRAMERATE_LIMIT:
-                return this.fpsLimit >= option.getMax() ? "Unlimited" : this.fpsLimit + " fps";
-            case CLOUD_HEIGHT:
-                return "+" + (int) (this.cloudHeight * 100) + "%";
-            case MIPMAP:
-                return this.mipmapLevel == 0 ? language.translate("options.off") : "" + this.mipmapLevel;
-            case MIPMAP_TYPE:
-                return this.mipmapType == 0 ? "Nearest" : this.mipmapType == 1 ? "Crispy" : "Linear";
-            case FOG:
-                return "" + this.fogStart;
-            case CHAT_TEXT_OPACITY:
-                return (int) (this.chatTextOpacity * 100) + "%";
-            case CHAT_BACKGROUND_OPACITY:
-                return (int) (this.chatBgOpacity * 100) + "%";
-            case CHAT_SCALE:
-                return (int) (this.chatScale * 100) + "%";
-            default:
-                return "";
-        }
+        return switch (option) {
+            case RENDER_DISTANCE -> this.renderDistance + " chunks";
+            case BRIGHTNESS -> this.brightness == 0.0F ? "Moody" : this.brightness == 1.0F ? "Bright" : (int) (this.brightness * 100) + "%";
+            case FRAMERATE_LIMIT -> this.fpsLimit >= option.getMax() ? "Unlimited" : this.fpsLimit + " fps";
+            case CLOUD_HEIGHT -> "+" + (int) (this.cloudHeight * 100) + "%";
+            case MIPMAP -> this.mipmapLevel == 0 ? language.translate("options.off") : "" + this.mipmapLevel;
+            case MIPMAP_TYPE -> this.mipmapType == 0 ? "Nearest" : this.mipmapType == 1 ? "Crispy" : "Linear";
+            case FOG -> "" + this.fogStart;
+            case CHAT_TEXT_OPACITY -> (int) (this.chatTextOpacity * 100) + "%";
+            case CHAT_BACKGROUND_OPACITY -> (int) (this.chatBgOpacity * 100) + "%";
+            case CHAT_SCALE -> (int) (this.chatScale * 100) + "%";
+            default -> "";
+        };
     }
     
     public float getFloat(BVOptions.Option option) {
-        switch (option) {
-            case RENDER_DISTANCE:
-                return this.renderDistance;
-            case BRIGHTNESS:
-                return this.brightness;
-            case FRAMERATE_LIMIT:
-                return this.fpsLimit;
-            case MIPMAP:
-                return this.mipmapLevel;
-            case MIPMAP_TYPE:
-                return this.mipmapType;
-            case FOG:
-                return this.fogStart;
-            case CLOUD_HEIGHT:
-                return this.cloudHeight;
-            case CHAT_TEXT_OPACITY:
-                return this.chatTextOpacity;
-            case CHAT_BACKGROUND_OPACITY:
-                return this.chatBgOpacity;
-            case CHAT_SCALE:
-                return this.chatScale;
-            default:
-                return 0;
-        }
+        return switch (option) {
+            case RENDER_DISTANCE -> this.renderDistance;
+            case BRIGHTNESS -> this.brightness;
+            case FRAMERATE_LIMIT -> this.fpsLimit;
+            case MIPMAP -> this.mipmapLevel;
+            case MIPMAP_TYPE -> this.mipmapType;
+            case FOG -> this.fogStart;
+            case CLOUD_HEIGHT -> this.cloudHeight;
+            case CHAT_TEXT_OPACITY -> this.chatTextOpacity;
+            case CHAT_BACKGROUND_OPACITY -> this.chatBgOpacity;
+            case CHAT_SCALE -> this.chatScale;
+            default -> 0;
+        };
     }
 
     public boolean getBoolean(BVOptions.Option option) {
@@ -151,41 +128,27 @@ public class BVOptions {
             return this.getOptions().getBoolean(option.getOriginal());
         }
 
-        switch (option) {
-            case VSYNC:
-                return this.vsync;
-            case FULLSCREEN:
-                return this.fullscreen;
-            case BETTER_GRASS:
-                return this.betterGrass;
-            case WHITE_LINE_FIX:
-                return this.whiteLineFix;
-            case ENTITY_SHADOWS:
-                return this.entityShadows;
-            case SHOW_FPS:
-                return this.showFps;
-            case ASYNC_SCREENSHOTS:
-                return this.asyncScreenshots;
-            default:
-                return false;
-        }
+        return switch (option) {
+            case VSYNC -> this.vsync;
+            case FULLSCREEN -> this.fullscreen;
+            case BETTER_GRASS -> this.betterGrass;
+            case WHITE_LINE_FIX -> this.whiteLineFix;
+            case ENTITY_SHADOWS -> this.entityShadows;
+            case SHOW_FPS -> this.showFps;
+            case ASYNC_SCREENSHOTS -> this.asyncScreenshots;
+            default -> false;
+        };
     }
 
     public int getDetail(BVOptions.Option option) {
-        switch (option) {
-            case VIGNETTE:
-                return this.vignette;
-            case CLOUDS:
-                return this.clouds;
-            case LEAVES:
-                return this.leaves;
-            case GRASS:
-                return this.grass;
-            case RAIN_SNOW:
-                return this.rainAndSnow;
-            default:
-                return 0;
-        }
+        return switch (option) {
+            case VIGNETTE -> this.vignette;
+            case CLOUDS -> this.clouds;
+            case LEAVES -> this.leaves;
+            case GRASS -> this.grass;
+            case RAIN_SNOW -> this.rainAndSnow;
+            default -> 0;
+        };
     }
 
     public void set(BVOptions.Option option, int i) {
@@ -194,56 +157,42 @@ public class BVOptions {
         }
 
         switch (option) {
-            case VSYNC:
+            case VSYNC -> {
                 this.vsync = !this.vsync;
                 Display.setVSyncEnabled(this.vsync);
-                break;
-            case FULLSCREEN:
+            }
+            case FULLSCREEN -> {
                 this.fullscreen = !this.fullscreen;
                 try {
                     Display.setFullscreen(this.fullscreen);
                 } catch (LWJGLException ignored) {
                 }
-                break;
-            case BETTER_GRASS:
+            }
+            case BETTER_GRASS -> {
                 this.betterGrass = !this.betterGrass;
                 if (this.minecraft.world != null) {
                     this.minecraft.worldRenderer.reload();
                 }
-                break;
-            case VIGNETTE:
-                this.vignette = (this.vignette + i) % 3;
-                break;
-            case ENTITY_SHADOWS:
-                this.entityShadows = !this.entityShadows;
-                break;
-            case CLOUDS:
-                this.clouds = (this.clouds + i) % 4;
-                break;
-            case LEAVES:
+            }
+            case VIGNETTE -> this.vignette = (this.vignette + i) % 3;
+            case ENTITY_SHADOWS -> this.entityShadows = !this.entityShadows;
+            case CLOUDS -> this.clouds = (this.clouds + i) % 4;
+            case LEAVES -> {
                 this.leaves = (this.leaves + i) % 3;
                 if (this.minecraft.world != null) {
                     this.minecraft.worldRenderer.reload();
                 }
-                break;
-            case GRASS:
+            }
+            case GRASS -> {
                 this.grass = (this.grass + i) % 3;
                 if (this.minecraft.world != null) {
                     this.minecraft.worldRenderer.reload();
                 }
-                break;
-            case RAIN_SNOW:
-                this.rainAndSnow = (this.rainAndSnow + i) % 4;
-                break;
-            case WHITE_LINE_FIX:
-                this.whiteLineFix = !this.whiteLineFix;
-                break;
-            case SHOW_FPS:
-                this.showFps = !this.showFps;
-                break;
-            case ASYNC_SCREENSHOTS:
-                this.asyncScreenshots = !this.asyncScreenshots;
-                break;
+            }
+            case RAIN_SNOW -> this.rainAndSnow = (this.rainAndSnow + i) % 4;
+            case WHITE_LINE_FIX -> this.whiteLineFix = !this.whiteLineFix;
+            case SHOW_FPS -> this.showFps = !this.showFps;
+            case ASYNC_SCREENSHOTS -> this.asyncScreenshots = !this.asyncScreenshots;
         }
     }
 
@@ -251,37 +200,32 @@ public class BVOptions {
         switch (option) {
             case RENDER_DISTANCE:
                 this.renderDistance = (int) value;
-                break;
             case BRIGHTNESS:
                 this.brightness = value;
                 if (apply && this.minecraft.world != null) this.updateLighting(this.minecraft.world);
-                break;
             case FRAMERATE_LIMIT:
                 this.fpsLimit = (int) value;
-                break;
             case MIPMAP:
                 this.mipmapLevel = (int) value;
-                if (apply) this.minecraft.textureManager.reload();
-                break;
+                if (apply && !Mouse.isButtonDown(0)) this.minecraft.textureManager.reload();
             case MIPMAP_TYPE:
                 this.mipmapType = (int) value;
-                if (apply) this.minecraft.textureManager.reload();
-                break;
+                if (apply && !Mouse.isButtonDown(0)) this.minecraft.textureManager.reload();
             case FOG:
                 this.fogStart = value;
-                break;
+                
             case CLOUD_HEIGHT:
                 this.cloudHeight = value;
-                break;
+                
             case CHAT_TEXT_OPACITY:
                 this.chatTextOpacity = value;
-                break;
+                
             case CHAT_BACKGROUND_OPACITY:
                 this.chatBgOpacity = value;
-                break;
+                
             case CHAT_SCALE:
                 this.chatScale = value;
-                break;
+                
         }
     }
 
@@ -314,69 +258,27 @@ public class BVOptions {
                 try {
                     String[] strings = string.split(":");
                     switch (strings[0]) {
-                        case "renderDistance":
-                            this.renderDistance = Integer.parseInt(strings[1]);
-                            break;
-                        case "brightness":
-                            this.brightness = Float.parseFloat(strings[1]);
-                            break;
-                        case "fpsLimit":
-                            this.fpsLimit = Integer.parseInt(strings[1]);
-                            break;
-                        case "vsync":
-                            this.vsync = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "fullscreen":
-                            this.fullscreen = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "cloudHeight":
-                            this.cloudHeight = Float.parseFloat(strings[1]);
-                            break;
-                        case "mipmapLevel":
-                            this.mipmapLevel = Integer.parseInt(strings[1]);
-                            break;
-                        case "mipmapType":
-                            this.mipmapType = Integer.parseInt(strings[1]);
-                            break;
-                        case "betterGrass":
-                            this.betterGrass = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "fogStart":
-                            this.fogStart = Float.parseFloat(strings[1]);
-                            break;
-                        case "vignette":
-                            this.vignette = Integer.parseInt(strings[1]);
-                            break;
-                        case "entityShadows":
-                            this.entityShadows = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "clouds":
-                            this.clouds = Integer.parseInt(strings[1]);
-                            break;
-                        case "leaves":
-                            this.leaves = Integer.parseInt(strings[1]);
-                            break;
-                        case "grass":
-                            this.grass = Integer.parseInt(strings[1]);
-                            break;
-                        case "rainAndSnow":
-                            this.rainAndSnow = Integer.parseInt(strings[1]);
-                            break;
-                        case "showFps":
-                            this.showFps = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "asyncScreenshots":
-                            this.asyncScreenshots = strings[1].equalsIgnoreCase("true");
-                            break;
-                        case "chatTextOpacity":
-                            this.chatTextOpacity = Float.parseFloat(strings[1]);
-                            break;
-                        case "chatBgOpacity":
-                            this.chatBgOpacity = Float.parseFloat(strings[1]);
-                            break;
-                        case "chatScale":
-                            this.chatScale = Float.parseFloat(strings[1]);
-                            break;
+                        case "renderDistance" -> this.renderDistance = Integer.parseInt(strings[1]);
+                        case "brightness" -> this.brightness = Float.parseFloat(strings[1]);
+                        case "fpsLimit" -> this.fpsLimit = Integer.parseInt(strings[1]);
+                        case "vsync" -> this.vsync = strings[1].equalsIgnoreCase("true");
+                        case "fullscreen" -> this.fullscreen = strings[1].equalsIgnoreCase("true");
+                        case "cloudHeight" -> this.cloudHeight = Float.parseFloat(strings[1]);
+                        case "mipmapLevel" -> this.mipmapLevel = Integer.parseInt(strings[1]);
+                        case "mipmapType" -> this.mipmapType = Integer.parseInt(strings[1]);
+                        case "betterGrass" -> this.betterGrass = strings[1].equalsIgnoreCase("true");
+                        case "fogStart" -> this.fogStart = Float.parseFloat(strings[1]);
+                        case "vignette" -> this.vignette = Integer.parseInt(strings[1]);
+                        case "entityShadows" -> this.entityShadows = strings[1].equalsIgnoreCase("true");
+                        case "clouds" -> this.clouds = Integer.parseInt(strings[1]);
+                        case "leaves" -> this.leaves = Integer.parseInt(strings[1]);
+                        case "grass" -> this.grass = Integer.parseInt(strings[1]);
+                        case "rainAndSnow" -> this.rainAndSnow = Integer.parseInt(strings[1]);
+                        case "showFps" -> this.showFps = strings[1].equalsIgnoreCase("true");
+                        case "asyncScreenshots" -> this.asyncScreenshots = strings[1].equalsIgnoreCase("true");
+                        case "chatTextOpacity" -> this.chatTextOpacity = Float.parseFloat(strings[1]);
+                        case "chatBgOpacity" -> this.chatBgOpacity = Float.parseFloat(strings[1]);
+                        case "chatScale" -> this.chatScale = Float.parseFloat(strings[1]);
                     }
                 } catch (Exception exception6) {
                     System.out.println("Skipping bad option: " + string);

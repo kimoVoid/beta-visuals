@@ -20,13 +20,10 @@ public class BlockRendererMixin {
             )
     )
     private boolean setGrassQuality(Operation<Boolean> original) {
-        switch (BetaVisuals.OPTIONS.grass) {
-            case 1:
-                return true;
-            case 2:
-                return false;
-            default:
-                return original.call();
-        }
+        return switch (BetaVisuals.OPTIONS.grass) {
+            case 1 -> true;
+            case 2 -> false;
+            default -> original.call();
+        };
     }
 }

@@ -11,13 +11,10 @@ public class WorldRendererMixin {
 
     @ModifyArg(method = "reload", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/LeavesBlock;setCulling(Z)V"))
     private boolean setLeafQuality(boolean culling) {
-        switch (BetaVisuals.OPTIONS.leaves) {
-            case 1:
-                return true;
-            case 2:
-                return false;
-            default:
-                return culling;
-        }
+        return switch (BetaVisuals.OPTIONS.leaves) {
+            case 1 -> true;
+            case 2 -> false;
+            default -> culling;
+        };
     }
 }
