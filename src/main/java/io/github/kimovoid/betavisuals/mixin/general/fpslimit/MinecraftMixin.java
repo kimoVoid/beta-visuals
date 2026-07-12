@@ -46,7 +46,7 @@ public class MinecraftMixin {
 
     @Unique
     public int getMaxFramerate() {
-        return this.world == null && this.screen != null ? 60 : BetaVisuals.OPTIONS.fpsLimit;
+        return !Display.isActive() ? BetaVisuals.OPTIONS.unfocusedFps : this.world == null && this.screen != null ? BetaVisuals.OPTIONS.menuFps : BetaVisuals.OPTIONS.fpsLimit;
     }
 
     @Unique
