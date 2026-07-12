@@ -60,7 +60,7 @@ public class WorldRendererMixin {
                     ordinal = 0
             )
     )
-    public void overrideHorizontalRenderDistnace(CallbackInfo ci) {
+    public void overrideXRenderDistance(CallbackInfo ci) {
         this.chunkCountX = BetaVisuals.OPTIONS.renderDistance * 2 + 1;
     }
 
@@ -74,7 +74,7 @@ public class WorldRendererMixin {
                     ordinal = 0
             )
     )
-    public void overrideDeepRenderDistnace(CallbackInfo ci) {
+    public void overrideZRenderDistance(CallbackInfo ci) {
         this.chunkCountZ = BetaVisuals.OPTIONS.renderDistance * 2 + 1;
     }
 }

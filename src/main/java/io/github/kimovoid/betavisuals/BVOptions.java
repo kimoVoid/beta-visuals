@@ -246,6 +246,10 @@ public class BVOptions {
         Minecraft.INSTANCE.worldRenderer.reload();
     }
 
+    public int getRenderDistance() {
+        return this.renderDistance <= 12 ? this.renderDistance + 4 : Math.max(this.renderDistance, 16);
+    }
+
     public void load() {
         try {
             if (!this.file.exists()) {

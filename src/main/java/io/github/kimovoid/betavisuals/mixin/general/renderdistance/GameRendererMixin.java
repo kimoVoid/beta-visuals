@@ -27,7 +27,7 @@ public class GameRendererMixin {
             )
     )
     public void setRenderDistance(float tickDelta, int anaglyphRenderPass, CallbackInfo ci) {
-        this.renderDistance = BetaVisuals.OPTIONS.renderDistance * 16;
+        this.renderDistance = BetaVisuals.OPTIONS.getRenderDistance() * 16;
     }
 
     @WrapOperation(
@@ -41,19 +41,4 @@ public class GameRendererMixin {
     public int setSkyFog(GameOptions instance, Operation<Integer> original) {
         return BetaVisuals.OPTIONS.renderDistance > 4 ? 0 : 3;
     }
-
-    /*
-    @Unique public float originalViewDistance = 0F;
-
-    @Inject(method = "setupFog", at = @At(value = "HEAD"))
-    public void injectViewDistance(int mode, float tickDelta, CallbackInfo ci) {
-        originalViewDistance = this.renderDistance;
-        this.renderDistance = this.renderDistance * 0.2F;
-    }
-
-    @Inject(method = "setupFog", at = @At(value = "TAIL"))
-    public void returnOriginalViewDistance(int mode, float tickDelta, CallbackInfo ci) {
-        this.renderDistance = originalViewDistance;
-    }
-     */
 }
