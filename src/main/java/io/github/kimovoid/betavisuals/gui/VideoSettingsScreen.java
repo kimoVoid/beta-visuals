@@ -1,7 +1,6 @@
 package io.github.kimovoid.betavisuals.gui;
 
 import io.github.kimovoid.betavisuals.BVOptions;
-import io.github.kimovoid.betavisuals.gui.backport.EntryListWidget;
 import io.github.kimovoid.betavisuals.gui.widget.OptionListWidget;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,7 +15,7 @@ public class VideoSettingsScreen extends Screen {
     private final Screen parent;
     protected String title = "Video Settings";
     private final GameOptions options;
-    private EntryListWidget listWidget;
+    private OptionListWidget listWidget;
     private BVOptions.Category category;
 
     private static final BVOptions.Category[] CATEGORIES = new BVOptions.Category[] {
@@ -47,6 +46,11 @@ public class VideoSettingsScreen extends Screen {
         }
 
         this.listWidget = new OptionListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 25, this.category);
+    }
+
+    @Override
+    public void tick() {
+        this.listWidget.tick();
     }
 
     @Override

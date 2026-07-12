@@ -57,12 +57,50 @@ public class BVOptions {
         this.minecraft = mc;
         this.file = new File(Minecraft.getWorkingDirectory(), "bvoptions.txt");
         this.load();
+        this.initTooltips();
     }
 
     private GameOptions getOptions() {
         return this.minecraft.options;
     }
-    
+
+    private void initTooltips() {
+        Option.RENDER_DISTANCE.setTooltip("Controls how far you're able to see. Render Distance is calculated in chunks.\nHigher render distances are very demanding on singleplayer.");
+        Option.BRIGHTNESS.setTooltip("Controls how visible your game is based on the amount of exposure to light.\nLower brightness means darker visuals.");
+        Option.GUI_SCALE.setTooltip("Decides the size of the user interfaces such as menus, buttons and sliders.\nHigher number means a bigger interface.");
+        Option.FRAMERATE_LIMIT.setTooltip("Adds a limit to your frames per second.");
+        Option.VSYNC.setTooltip("Limits your framerate to your monitor's refresh rate.");
+        Option.FULLSCREEN.setTooltip("Toggles fullscreen ON/OFF.");
+        Option.VIEW_BOBBING.setTooltip("Decides if your camera should dynamically shake with each movement.");
+
+        Option.GRAPHICS.setTooltip("The main graphics option.\nChanges the appearance of leaves, grass, clouds and shadows.");
+        Option.AMBIENT_OCCLUSION.setTooltip("Adds a shadow between blocks");
+        Option.VIEW_BOBBING.setTooltip("Decides if your camera should dynamically shake with each movement.");
+        Option.MIPMAP.setTooltip("Makes distant objects look better by smoothing the texture details.");
+        Option.MIPMAP_TYPE.setTooltip("Requires Mipmaps to be enabled.\n§8\n- Nearest: Rough smoothing\n- Crispy: Similar to Legacy Console Edition\n- Linear: Fine smoothing");
+        Option.CLOUDS.setTooltip("Controls the quality of clouds.\n§8\n- Default: Controlled by Graphics setting\n- Fancy: 3D Clouds\n- Fast: Flat clouds\n- OFF: Disabled entirely");
+        Option.LEAVES.setTooltip("Controls the quality of leaves.\n§8\n- Default: Controlled by Graphics setting\n- Fancy: Transparent leaves\n- Fast: Opaque clouds");
+        Option.GRASS.setTooltip("Controls the quality of grass blocks.\n§8\n- Default: Controlled by Graphics setting\n- Fancy: Biome side texture\n- Fast: Default side texture");
+        Option.RAIN_SNOW.setTooltip("Controls the quality of rain and snow.\n§8\n- Default: Controlled by Graphics setting\n- Fancy: More rain/snow\n- Fast: Less rain/snow\n- OFF: Disabled entirely");
+
+        Option.CLOUD_HEIGHT.setTooltip("Decides the height at which the clouds are rendered.");
+        Option.BETTER_GRASS.setTooltip("Toggles the side-texture for grass blocks also being the top-texture.");
+        Option.VIGNETTE.setTooltip("Adds a subtle dark contour around the player's point of view.\n§8\n- Default: Controlled by Graphics setting\n- ON: Always enabled\n- OFF: Always disabled");
+        Option.ENTITY_SHADOWS.setTooltip("Decides whether or not entities should show a shadow texture on the block beneath them.");
+
+        Option.ADVANCED_OPENGL.setTooltip("Also known as \"occlusion culling\", it prevents the game from rendering blocks that you can't see.");
+        Option.ANAGLYPH.setTooltip("3D mode used for red-cyan 3D glasses.");
+        Option.FOG.setTooltip("Decides the distance in which the fog should begin to show itself.\nHigher number means further away.");
+
+        Option.SHOW_FPS.setTooltip("Displays the current framerate on the top-left corner of your screen.");
+        Option.UNFOCUSED_FPS.setTooltip("Overrides the framerate limit when the game isn't focused.");
+        Option.MENU_FPS.setTooltip("Overrides the framerate limit whilst being inside of a menu.");
+        Option.ASYNC_SCREENSHOTS.setTooltip("Saves screenshots on a separate thread.\nHelps avoid lag-spikes while taking screenshots.");
+        Option.CHAT_TEXT_OPACITY.setTooltip("Determines the visibility of the text appearing in chat.");
+        Option.CHAT_BACKGROUND_OPACITY.setTooltip("Determines the visibility of the text-background in chat.");
+        Option.CHAT_SCALE.setTooltip("Decides the size of the chat window.\nHigher number means a bigger chat window.");
+    }
+
     public String getName(BVOptions.Option option) {
         Language language = Language.getInstance();
         if (option.getOriginal() != null) {
@@ -427,6 +465,7 @@ public class BVOptions {
         private float max;
         private float step;
         private String section = "";
+        private String tooltip = "";
         private GameOptions.Option original;
 
         Option(String name, boolean isFloat, boolean isBoolean, boolean detail) {
@@ -455,6 +494,14 @@ public class BVOptions {
             this.min = min;
             this.max = max;
             this.step = step;
+        }
+
+        public void setTooltip(String s) {
+            this.tooltip = s;
+        }
+
+        public String getTooltip() {
+            return this.tooltip;
         }
 
         public String getSection() {

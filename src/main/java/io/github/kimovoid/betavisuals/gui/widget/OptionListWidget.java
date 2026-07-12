@@ -18,7 +18,11 @@ import java.util.List;
 public class OptionListWidget extends EntryListWidget {
 
     private final static int MARGIN = 5;
+    private final static int TOOLTIP_DELAY = 10;
+
     private final List<EntryListWidget.Entry> entries = new ArrayList<>();
+    private BVOptions.Option hovered;
+    private int hoveredTicks = 0;
 
     public OptionListWidget(Minecraft minecraft, int width, int height, int minY, int maxY, int itemHeight, BVOptions.Category category) {
         super(minecraft, width, height, minY, maxY, itemHeight);
@@ -80,8 +84,57 @@ public class OptionListWidget extends EntryListWidget {
                 (int) ((this.maxY - this.minY) * scale)
         );
         GL11.glGetError();
+
         super.render(mouseX, mouseY, tickDelta);
+        if (this.hoveredTicks == TOOLTIP_DELAY && this.hovered != null && !this.hovered.getTooltip().isEmpty()) {
+            this.renderTooltip(mouseY);
+        }
+
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
+    }
+
+    public void tick() {
+        if (this.hoveredTicks < TOOLTIP_DELAY) {
+            this.hoveredTicks++;
+        }
+    }
+
+    private void renderTooltip(int mouseY) {
+        int height = Math.min(100, (this.maxY - this.minY) / 2);
+        int minY = this.maxY - height;
+        int maxY = this.maxY;
+        int maxX = this.maxX - (OptionListWidget.this.getMaxScroll() > 0 ? 6 : 0);
+        if (mouseY > minY) {
+            minY = this.minY + 2;
+            maxY = minY + height;
+        }
+
+        // border
+        GuiUtil.fill(this.minX + 1, minY - 1, maxX - 1, minY, 1694498815);
+        GuiUtil.fill(maxX - 1, minY, maxX - 2, maxY - 2, 1694498815);
+        GuiUtil.fill(this.minX + 1, maxY - 1, maxX - 1, maxY - 2, 1694498815);
+        GuiUtil.fill(this.minX + 1, minY, this.minX + 2, maxY - 2, 1694498815);
+
+        // fill
+        GuiUtil.fill(this.minX + 2, minY, maxX - 2, maxY - 2, -352321536);
+
+        // title
+        this.minecraft.textRenderer.splitAndDraw(
+                Language.getInstance().translate(this.hovered.getName()),
+                this.minX + 8,
+                minY + 8,
+                maxX - this.minX - 8,
+                16777120
+        );
+
+        // tooltip
+        this.minecraft.textRenderer.splitAndDraw(
+                this.hovered.getTooltip(),
+                this.minX + 8,
+                minY + 20,
+                this.maxX - this.minX - 8,
+                -3618616
+        );
     }
 
     public class Entry implements EntryListWidget.Entry {
@@ -97,8 +150,19 @@ public class OptionListWidget extends EntryListWidget {
 
         @Override
         public void render(int index, int x, int y, int width, int height, Tesselator tesselator, int mouseX, int mouseY, boolean hovered) {
-            TextRenderer textRenderer = minecraft.textRenderer;
+            boolean hoveringText = this.isHoveringText(mouseX, mouseY, x, y, height);
+            if (hoveringText) {
+                if (OptionListWidget.this.hovered != this.option) {
+                    OptionListWidget.this.hoveredTicks = 0;
+                }
+                OptionListWidget.this.hovered = this.option;
+            }
 
+            if (OptionListWidget.this.hovered == this.option && !hoveringText) {
+                OptionListWidget.this.hoveredTicks = 0;
+            }
+
+            TextRenderer textRenderer = this.minecraft.textRenderer;
             String name = BetaVisuals.OPTIONS.getName(option);
             int nameWidth = textRenderer.getWidth(name);
             int color = hovered ? 16777120 : 14737632;
@@ -139,6 +203,12 @@ public class OptionListWidget extends EntryListWidget {
             if (this.btn != null) {
                 this.btn.mouseReleased(mouseX, mouseY);
             }
+        }
+
+        private boolean isHoveringText(int mouseX, int mouseY, int x, int y, int height) {
+            String name = BetaVisuals.OPTIONS.getName(option);
+            int width = this.minecraft.textRenderer.getWidth(name);
+            return  mouseX >= x && mouseY >= y && mouseX < x + width + 10 && mouseY < y + height;
         }
     }
 
