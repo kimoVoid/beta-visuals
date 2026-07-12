@@ -201,7 +201,7 @@ public class BVOptions {
             case RENDER_DISTANCE -> this.renderDistance = (int) value;
             case BRIGHTNESS -> {
                 this.brightness = value;
-                if (apply && this.minecraft.world != null) this.updateLighting(this.minecraft.world);
+                if (apply && !Mouse.isButtonDown(0) && this.minecraft.world != null) this.updateLighting(this.minecraft.world);
             }
             case FRAMERATE_LIMIT -> this.fpsLimit = (int) value;
             case MIPMAP -> {
