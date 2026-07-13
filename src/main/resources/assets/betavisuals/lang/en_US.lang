@@ -1,4 +1,5 @@
 options.default=Default
+options.fov=FOV
 options.brightness=Brightness
 options.fullscreen=Fullscreen
 options.vsync=VSync

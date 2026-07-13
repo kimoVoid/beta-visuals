@@ -19,6 +19,7 @@ public class BVOptions {
     private final File file;
 
     // general
+    public float fov = 70.0F;
     public int renderDistance = 12;
     public float brightness = 0.0F;
     public int fpsLimit = 260;
@@ -133,6 +134,7 @@ public class BVOptions {
         }
 
         return switch (option) {
+            case FOV -> language.translate(option.getName()) + ": " + ((int) this.fov == 70 ? "Normal" : (int) this.fov == 110 ? "Quake Pro" : "" + (int) this.fov);
             case RENDER_DISTANCE -> this.renderDistance + " chunks";
             case BRIGHTNESS -> this.brightness == 0.0F ? "Moody" : this.brightness == 1.0F ? "Bright" : (int) (this.brightness * 100) + "%";
             case FRAMERATE_LIMIT -> this.fpsLimit >= option.getMax() ? "Unlimited" : this.fpsLimit + " fps";
@@ -151,6 +153,7 @@ public class BVOptions {
     
     public float getFloat(BVOptions.Option option) {
         return switch (option) {
+            case FOV -> this.fov;
             case RENDER_DISTANCE -> this.renderDistance;
             case BRIGHTNESS -> this.brightness;
             case FRAMERATE_LIMIT -> this.fpsLimit;
@@ -242,6 +245,7 @@ public class BVOptions {
 
     public void set(BVOptions.Option option, float value, boolean apply) {
         switch (option) {
+            case FOV -> this.fov = value;
             case RENDER_DISTANCE -> this.renderDistance = (int) value;
             case BRIGHTNESS -> {
                 this.brightness = value;
@@ -295,6 +299,7 @@ public class BVOptions {
                 try {
                     String[] strings = string.split(":");
                     switch (strings[0]) {
+                        case "fov" -> this.fov = Float.parseFloat(strings[1]);
                         case "renderDistance" -> this.renderDistance = Integer.parseInt(strings[1]);
                         case "brightness" -> this.brightness = Float.parseFloat(strings[1]);
                         case "fpsLimit" -> this.fpsLimit = Integer.parseInt(strings[1]);
@@ -333,6 +338,7 @@ public class BVOptions {
     public void save() {
         try {
             PrintWriter printWriter = new PrintWriter(new FileWriter(this.file));
+            printWriter.println("fov:" + this.fov);
             printWriter.println("renderDistance:" + this.renderDistance);
             printWriter.println("brightness:" + this.brightness);
             printWriter.println("fpsLimit:" + this.fpsLimit);
@@ -422,6 +428,7 @@ public class BVOptions {
     }
 
     public enum Option {
+        FOV("options.fov", true, false, 30.0F, 110.0F, 0.0F),
         RENDER_DISTANCE("options.renderDistance", true, false, 2.0F, 32.0F, 1.0F),
         BRIGHTNESS("options.brightness", true, false, 0.0F, 1.0F, 0.0F),
         FRAMERATE_LIMIT("options.fpsLimit", true, false, 10.0F, 260.0F, 10.0F),

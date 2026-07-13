@@ -19,6 +19,13 @@ public class OptionSliderWidget extends ButtonWidget {
       this.message = BetaVisuals.OPTIONS.getValueString(option);
    }
 
+   public OptionSliderWidget(int id, int x, int y, int width, int height, BVOptions.Option option) {
+      super(id, x, y, width, height, "");
+      this.option = option;
+      this.value = option.normalize(BetaVisuals.OPTIONS.getFloat(option));
+      this.message = BetaVisuals.OPTIONS.getValueString(option);
+   }
+
    @Override
    protected int getYImage(boolean hovered) {
       return 0;

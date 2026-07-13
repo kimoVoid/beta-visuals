@@ -11,6 +11,7 @@
     "details.cloudheight.DimensionMixin",
     "details.entityshadows.EntityRendererMixin",
     "details.vignette.GameGuiMixin",
+    "general.fov.GameRendererMixin",
     "general.fpslimit.GameRendererMixin",
     "general.fpslimit.MinecraftMixin",
     "general.fullscreen.DisplayMixin",
