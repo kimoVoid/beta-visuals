@@ -23,6 +23,7 @@
     "other.asyncscreenshots.ScreenshotMixin",
     "other.chat.GameGuiMixin",
     "other.chat.TextRendererMixin",
+    "other.screenshotsize.ScreenshotMixin",
     "other.showfps.GameGuiMixin",
     "quality.clouds.WorldRendererMixin",
     "quality.grass.BlockRendererMixin",

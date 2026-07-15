@@ -47,12 +47,13 @@ public class BVOptions {
 
     // other
     public boolean showFps = false;
+    public int unfocusedFps = 60;
+    public int menuFps = 60;
     public boolean asyncScreenshots = true;
+    public int screenshotSize = 1;
     public float chatTextOpacity = 1.0F;
     public float chatBgOpacity = 0.5F;
     public float chatScale = 1.0F;
-    public int unfocusedFps = 60;
-    public int menuFps = 60;
 
     public BVOptions(Minecraft mc) {
         this.minecraft = mc;
@@ -97,6 +98,7 @@ public class BVOptions {
         Option.UNFOCUSED_FPS.setTooltip("Overrides the framerate limit when the game isn't focused.");
         Option.MENU_FPS.setTooltip("Overrides the framerate limit whilst being inside of a menu.");
         Option.ASYNC_SCREENSHOTS.setTooltip("Saves screenshots on a separate thread.\nHelps avoid lag-spikes while taking screenshots.");
+        Option.SCREENSHOT_SIZE.setTooltip("Determines the scale of saved screenshots.\nBigger screenshots may take a moment to save, and will also use more space.\nIt is recommended to turn off Advanced OpenGL to avoid missing chunks.");
         Option.CHAT_TEXT_OPACITY.setTooltip("Determines the visibility of the text appearing in chat.");
         Option.CHAT_BACKGROUND_OPACITY.setTooltip("Determines the visibility of the text-background in chat.");
         Option.CHAT_SCALE.setTooltip("Decides the size of the chat window.\nHigher number means a bigger chat window.");
@@ -144,6 +146,7 @@ public class BVOptions {
             case FOG -> "" + this.fogStart;
             case UNFOCUSED_FPS -> this.unfocusedFps >= option.getMax() ? "Unlimited" : this.unfocusedFps + " fps";
             case MENU_FPS -> this.menuFps >= option.getMax() ? "Unlimited" : this.menuFps + " fps";
+            case SCREENSHOT_SIZE -> this.screenshotSize + "x";
             case CHAT_TEXT_OPACITY -> (int) (this.chatTextOpacity * 100) + "%";
             case CHAT_BACKGROUND_OPACITY -> (int) (this.chatBgOpacity * 100) + "%";
             case CHAT_SCALE -> (int) (this.chatScale * 100) + "%";
@@ -163,6 +166,7 @@ public class BVOptions {
             case CLOUD_HEIGHT -> this.cloudHeight;
             case UNFOCUSED_FPS -> this.unfocusedFps;
             case MENU_FPS -> this.menuFps;
+            case SCREENSHOT_SIZE -> this.screenshotSize;
             case CHAT_TEXT_OPACITY -> this.chatTextOpacity;
             case CHAT_BACKGROUND_OPACITY -> this.chatBgOpacity;
             case CHAT_SCALE -> this.chatScale;
@@ -264,6 +268,7 @@ public class BVOptions {
             case CLOUD_HEIGHT -> this.cloudHeight = value;
             case UNFOCUSED_FPS -> this.unfocusedFps = (int) value;
             case MENU_FPS -> this.menuFps = (int) value;
+            case SCREENSHOT_SIZE -> this.screenshotSize = (int) value;
             case CHAT_TEXT_OPACITY -> this.chatTextOpacity = value;
             case CHAT_BACKGROUND_OPACITY -> this.chatBgOpacity = value;
             case CHAT_SCALE -> this.chatScale = value;
@@ -320,6 +325,7 @@ public class BVOptions {
                         case "unfocusedFps" -> this.unfocusedFps = Integer.parseInt(strings[1]);
                         case "menuFps" -> this.menuFps = Integer.parseInt(strings[1]);
                         case "asyncScreenshots" -> this.asyncScreenshots = strings[1].equalsIgnoreCase("true");
+                        case "screenshotSize" -> this.screenshotSize = Integer.parseInt(strings[1]);
                         case "chatTextOpacity" -> this.chatTextOpacity = Float.parseFloat(strings[1]);
                         case "chatBgOpacity" -> this.chatBgOpacity = Float.parseFloat(strings[1]);
                         case "chatScale" -> this.chatScale = Float.parseFloat(strings[1]);
@@ -360,6 +366,7 @@ public class BVOptions {
             printWriter.println("unfocusedFps:" + this.unfocusedFps);
             printWriter.println("menuFps:" + this.menuFps);
             printWriter.println("asyncScreenshots:" + this.asyncScreenshots);
+            printWriter.println("screenshotSize:" + this.screenshotSize);
             printWriter.println("chatTextOpacity:" + this.chatTextOpacity);
             printWriter.println("chatBgOpacity:" + this.chatBgOpacity);
             printWriter.println("chatScale:" + this.chatScale);
@@ -405,6 +412,7 @@ public class BVOptions {
                 Option.UNFOCUSED_FPS,
                 Option.MENU_FPS,
                 Option.ASYNC_SCREENSHOTS,
+                Option.SCREENSHOT_SIZE,
                 Option.CHAT_TEXT_OPACITY,
                 Option.CHAT_BACKGROUND_OPACITY,
                 Option.CHAT_SCALE
@@ -453,6 +461,7 @@ public class BVOptions {
         RAIN_SNOW("options.rainAndSnow", false, false, true),
         SHOW_FPS("options.showFps", false, true, false),
         ASYNC_SCREENSHOTS("options.asyncScreenshots", false, true, false),
+        SCREENSHOT_SIZE("options.screenshotSize", true, false, 1.0F, 8.0F, 1.0F),
         WHITE_LINE_FIX("options.whiteLineFix", false, true, false),
         CHAT_TEXT_OPACITY("options.chatTextOpacity", true, false, 0.0F, 1.0F, 0.0F),
         CHAT_BACKGROUND_OPACITY("options.chatBgOpacity", true, false, 0.0F, 1.0F, 0.0F),

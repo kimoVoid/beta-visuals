@@ -19,6 +19,7 @@ options.showFps=Show Framerate
 options.unfocusedFps=Unfocused FPS Limit
 options.menuFps=Menu FPS Limit
 options.asyncScreenshots=Async Screenshots
+options.screenshotSize=Screenshot Size
 options.chatTextOpacity=Chat Text Opacity
 options.chatBgOpacity=Chat Background Opacity
 options.chatScale=Chat Scale
